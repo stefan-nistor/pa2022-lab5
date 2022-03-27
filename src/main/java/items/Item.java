@@ -1,5 +1,7 @@
 package items;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +10,13 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-@AllArgsConstructor
+@JsonTypeInfo( use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Book.class, name = "book"),
+        @JsonSubTypes.Type(value = Article.class, name = "article")
+})
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 public abstract class Item implements Serializable {
 
@@ -21,38 +28,6 @@ public abstract class Item implements Serializable {
 
     public void addTag(String key, Object obj){
         tags.put(key, obj);
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setTags(Map<String, Object> tags) {
-        this.tags = tags;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Map<String, Object> getTags() {
-        return tags;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
 }
