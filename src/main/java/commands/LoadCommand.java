@@ -17,14 +17,14 @@ import java.io.IOException;
 @AllArgsConstructor
 public class LoadCommand implements Command {
 
-    private String path;
-    private ObjectMapper objectMapper;
     private Catalog catalog;
+    private String path;
 
     @Override
     public void run() {
+        ObjectMapper objectMapper = new ObjectMapper();
         try {
-            this.catalog = objectMapper.readValue(new File(path), Catalog.class);
+            catalog = objectMapper.readValue(new File(path), Catalog.class);
         } catch (FileNotFoundException e) {
             log.error("File not found.");
         } catch (IOException e) {

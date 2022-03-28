@@ -17,12 +17,12 @@ import java.io.IOException;
 @AllArgsConstructor
 public class SaveCommand implements Command{
 
-    private String path;
     private Catalog catalog;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private String path;
 
     @Override
     public void run() {
+        ObjectMapper objectMapper = new ObjectMapper();
         try {
             objectMapper.writeValue(new File(path), catalog);
         } catch (FileNotFoundException e) {

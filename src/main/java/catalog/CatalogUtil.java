@@ -17,7 +17,7 @@ import java.net.URISyntaxException;
 @Slf4j
 public class CatalogUtil {
 
-    public static void save (Catalog catalog, String path) throws InvalidPathException, SaveCatalogException {
+    public static void save(Catalog catalog, String path) throws InvalidPathException, SaveCatalogException {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             objectMapper.writeValue(new File(path), catalog);
@@ -28,7 +28,7 @@ public class CatalogUtil {
         }
     }
 
-    public static Catalog load (String path) throws InvalidPathException, LoadCatalogException {
+    public static Catalog load(String path) throws InvalidPathException, LoadCatalogException {
         ObjectMapper objectMapper = new ObjectMapper();
         Catalog loadedCatalog = new Catalog();
         try {
