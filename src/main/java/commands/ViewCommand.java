@@ -28,12 +28,9 @@ public class ViewCommand implements Command {
         final String itemLocation = item.getLocation();
         try {
             switch (item.getClass().getName()) {
-                case "items.Book":
-                    desktop.open(new File(itemLocation));
-                case "items.Article":
-                    desktop.browse(new URI("https://youtu.be/dQw4w9WgXcQ"));
-                default:
-                    throw new InvalidItemType(item.getClass().getName());
+                case "items.Book" -> desktop.open(new File(itemLocation));
+                case "items.Article" -> desktop.browse(new URI(itemLocation));
+                default -> throw new InvalidItemType(item.getClass().getName());
             }
         } catch (IOException e) {
             log.error("Specified file has no associated application or associated application failed to launch");

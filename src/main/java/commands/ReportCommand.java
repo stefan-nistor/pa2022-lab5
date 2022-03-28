@@ -1,7 +1,6 @@
 package commands;
 
 import catalog.Catalog;
-import exceptions.InvalidPathException;
 import freemarker.core.ParseException;
 import freemarker.template.*;
 import items.Article;
@@ -28,9 +27,9 @@ public class ReportCommand implements Command {
     private Catalog catalog;
 
     @Override
-    public void run() throws InvalidPathException {
+    public void run() throws IOException {
         Configuration configuration = new Configuration(Configuration.VERSION_2_3_31);
-        configuration.setClassForTemplateLoading(ReportCommand.class, "report");
+        configuration.setDirectoryForTemplateLoading(new File("report"));
         configuration.setDefaultEncoding("UTF-8");
         configuration.setLocale(Locale.US);
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
@@ -54,7 +53,7 @@ public class ReportCommand implements Command {
         Template template = null;
 
         try {
-            configuration.getTemplate("report.ftl");
+            template = configuration.getTemplate("report.ftl");
         } catch (TemplateNotFoundException e) {
             e.printStackTrace();
         } catch (ParseException e) {
@@ -70,6 +69,12 @@ public class ReportCommand implements Command {
             htmlWriter = new FileWriter("report.html");
         } catch (IOException e) {
             log.error("I/O Error has occurred");
+        }
+
+        try {
+            template.process(root, htmlWriter);
+        } catch (TemplateException e) {
+            log.error("Cannot process template.");
         }
 
         File htmlFile = new File("report.html");

@@ -4,6 +4,8 @@ import catalog.Catalog;
 import exceptions.InvalidPathException;
 import items.Item;
 
+import java.io.IOException;
+
 public interface Command {
-    void run() throws InvalidPathException;
+    void run() throws IOException;
 }
